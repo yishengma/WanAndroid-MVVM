@@ -9,13 +9,14 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.mayisheng.wanandroid.R;
+import com.mayisheng.wanandroid.fragment.base.BaseFragment;
 
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link OfficialAccountFragment#newInstance} factory method to
  * create an instance of this fragment.
  */
-public class OfficialAccountFragment extends Fragment {
+public class OfficialAccountFragment extends BaseFragment {
 
     // TODO: Rename parameter arguments, choose names that match
     // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
@@ -39,11 +40,9 @@ public class OfficialAccountFragment extends Fragment {
      * @return A new instance of fragment OfficialAccountFragment.
      */
     // TODO: Rename and change types and number of parameters
-    public static OfficialAccountFragment newInstance(String param1, String param2) {
+    public static OfficialAccountFragment newInstance() {
         OfficialAccountFragment fragment = new OfficialAccountFragment();
         Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
         fragment.setArguments(args);
         return fragment;
     }
@@ -62,5 +61,10 @@ public class OfficialAccountFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         return inflater.inflate(R.layout.fragment_official_account, container, false);
+    }
+
+    @Override
+    public String getTitle() {
+        return "公众号";
     }
 }
