@@ -16,5 +16,18 @@ public class HomeInfo {
     }
 
     private List<BannerInfo> mBannerInfos;
+    private int mType;
 
+    public HomeInfo(List<BannerInfo> bannerInfos) {
+        mBannerInfos = bannerInfos;
+        mType = Type.BANNER_INFO;
+    }
+
+    public int getType() {
+        return mType;
+    }
+
+    public List<BannerInfo> getBannerInfos() {
+        return mBannerInfos;
+    }
 }

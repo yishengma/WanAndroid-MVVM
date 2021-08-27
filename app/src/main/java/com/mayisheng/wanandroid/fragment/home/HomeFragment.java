@@ -14,6 +14,9 @@ import com.mayisheng.wanandroid.R;
 import com.mayisheng.wanandroid.Utils.OkHttpUtil;
 import com.mayisheng.wanandroid.fragment.base.BaseFragment;
 
+import java.util.ArrayList;
+import java.util.List;
+
 /**
  * A simple {@link Fragment} subclass.
  * Use the {@link HomeFragment#newInstance} factory method to
@@ -23,6 +26,7 @@ public class HomeFragment extends BaseFragment {
     private static final String TAG = "HomeFragment";
     private RecyclerView mRecyclerView;
     private HomeRvAdapter mHomeRvAdapter;
+    private List<HomeInfo> mHomeInfos;
 
     public HomeFragment() {
         // Required empty public constructor
@@ -59,14 +63,23 @@ public class HomeFragment extends BaseFragment {
 
     private void initView(View rootView) {
         mRecyclerView = rootView.findViewById(R.id.recycler_view);
-        mHomeRvAdapter = new HomeRvAdapter();
+        mHomeInfos = new ArrayList<>();
+        mHomeRvAdapter = new HomeRvAdapter(mHomeInfos);
         mRecyclerView.setLayoutManager(new LinearLayoutManager(getContext(), RecyclerView.VERTICAL, false));
         mRecyclerView.setAdapter(mHomeRvAdapter);
         OkHttpUtil.getInstance().httpGet("https://wanandroid.com/banner/json", new OkHttpUtil.ICallback() {
             @Override
             public void invoke(String string) {
                 BannerInfoResponse response = new BannerInfoResponse(string);
-                Log.i(TAG, "invoke: "+response.mData.size());
+                Log.i(TAG, "invoke: " + response.mData.size());
+                HomeInfo homeInfo = new HomeInfo(response.mData);
+                mHomeInfos.add(homeInfo);
+                getActivity().runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        mHomeRvAdapter.notifyDataSetChanged();
+                    }
+                });
             }
         });
     }
